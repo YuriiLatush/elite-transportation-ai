@@ -1,46 +1,55 @@
-# Elite Transportation AI 🚗
+# Elite Transportation AI
 
-![Python](https://img.shields.io/badge/Python-3.14-blue?style=for-the-badge&logo=python)
-![OpenAI](https://img.shields.io/badge/OpenAI-GPT4o-black?style=for-the-badge&logo=openai)
-![LangGraph](https://img.shields.io/badge/LangGraph-Latest-orange?style=for-the-badge)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-blue?style=for-the-badge&logo=postgresql)
-![ChromaDB](https://img.shields.io/badge/ChromaDB-VectorDB-green?style=for-the-badge)
-![Railway](https://img.shields.io/badge/Railway-Deployed-purple?style=for-the-badge)
-
-AI sales agent for a VIP transportation company in Los Angeles. Built to handle client inquiries, qualify leads, and calculate pricing automatically.
+Production AI system for a VIP transportation company in Los Angeles.
+Handles lead qualification, pricing, and bookings via Telegram — deployed on Railway.
 
 ---
 
-## What it does
+## The problem it solves
 
-- Routes every message to the right agent (pricing, booking, cancellation)
-- Searches a vector database before answering — no hallucinations
-- Scores leads automatically: HOT / WARM / COLD
-- Saves full conversation history to PostgreSQL
-- Sends instant Telegram alerts when a lead goes HOT
+Transportation companies lose leads because no one responds at 2am.
+This system qualifies every inquiry instantly, scores the lead, and alerts the sales team only when it's HOT.
 
 ---
 
-## Architecture
-User Message
-↓
-LangGraph Classifier
-↓
-PRICING / BOOKING / CANCEL
-↓
-RAG Search (ChromaDB)
-↓
-Answer + Lead Score
-↓
-PostgreSQL (saved)
+## How it works
+Telegram message
+→ LangGraph router (pricing / booking / cancellation)
+→ ChromaDB search (company knowledge, no hallucinations)
+→ Lead scored: HOT / WARM / COLD
+→ Response sent + saved to PostgreSQL
+→ HOT lead → instant Telegram alert via n8n
+---
+
+## What's inside
+
+| Component | What it does |
+|---|---|
+| LangGraph | Routes messages to the right agent |
+| ChromaDB | Vector search over company knowledge base |
+| Lead scoring | HOT / WARM / COLD with persistent rank (never downgrades) |
+| PostgreSQL | Full conversation history, session memory |
+| n8n webhook | Fires Telegram alert when lead score hits HOT |
+| Railway | Deployed, running 24/7 |
+
+---
+
+## Built over 60 days
+
+Started from `print("AI engineer journey started")`.
+This is day 58 — the production version.
+
+Timeline: RAG → multi-agent → LangGraph → PostgreSQL → deploy → this.
+
 ---
 
 ## Stack
 
-Python · OpenAI · LangGraph · ChromaDB · PostgreSQL · Railway · n8n · Telegram Bot API
+Python 3.14 · OpenAI GPT-4o · LangGraph · ChromaDB · PostgreSQL · Railway · n8n · Telegram Bot API
 
 ---
 
-## Built by
+## Author
 
-[Yurii Latushkin](https://linkedin.com/in/yurii-l-94082424b) — Marketing background, building AI systems full time.
+**Yurii Latushkin** — [LinkedIn](https://linkedin.com/in/yurii-l-94082424b) · [GitHub](https://github.com/YuriiLatush)  
+Marketing background. Building AI systems full time.
